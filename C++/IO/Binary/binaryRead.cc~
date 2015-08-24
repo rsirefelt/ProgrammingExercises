@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+int main()
+{
+  //Read the file
+  
+  FILE *file = fopen("file.dat","rb");
+  int points = 0;
+  fread(&points,sizeof(int),1,file);
+  
+  double *data = new double[points];
+  fread(data,sizeof(double),points,file);
+  
+  fclose(file);
+  
+  //Print out file contents
+  
+  for (int i = 0; i < points; ++i){
+    printf(

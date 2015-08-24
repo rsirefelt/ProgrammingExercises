@@ -1,0 +1,43 @@
+#include "StringBuffer.h"
+#include <string>
+#include <algorithm>
+#include <iterator>
+
+StringBuffer::StringBuffer()
+{
+  arrayLength = 100;
+  StringBuffer(arrayLength);
+}
+  
+StringBuffer::StringBuffer(int initArrayLength)
+{
+  arrayLength = initArrayLength;
+  words = new std::string[initArrayLength];
+}
+  
+void StringBuffer::append(std::string word) 
+{
+  if (nrOfWords >= arrayLength){
+    arrayLength = 2*arrayLength;
+    std::string *tempString = new std::string[arrayLength];
+    
+    std::copy(words, words + nrOfWords, tempString);
+    words = tempString;  
+  }
+  
+  words[nrOfWords] = word;
+  ++nrOfWords;
+}
+
+std::string StringBuffer::toString() const
+{
+  // Weird solution
+  std::string combined;
+  
+  for (int i = 0; i < nrOfWords; ++i) {
+    combined.append(words[i]);
+  }
+  
+  return combined;
+}
+

@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <string>
+
+bool IsPermutation(std::string str1, std::string str2);
+
+int main()
+{
+  int buffSize = 256; 
+  char buff[buffSize];
+ 
+  printf("Input c_string1: ");
+  if (scanf("%256s", buff) != 1) {
+    fprintf(stderr, "Error\n");
+    return 1;
+  }
+  std::string str1(buff);
+  
+  printf("Input c_string2: ");
+  if (scanf("%256s", buff) != 1) {
+    fprintf(stderr, "Error\n");
+    return 1;
+  }
+  std::string str2(buff);
+  
+  printf("str1: %s\n", str1.c_str());
+  printf("str2: %s\n", str2.c_str());
+  
+  printf("%s\n", IsPermutation(str1,str2) ? "true" : "false");
+  
+  return 0;
+}
+
+bool IsPermutation(std::string str1, std::string str2)
+{
+  const int nrOfASCIIchar = 256; // obs must be const
+  int compChar[nrOfASCIIchar]{}; // assume ASCII
+  
+  if (str1.empty() || str2.empty()) {
+    return false;
+  } else if (str1.length() != str2.length()) {
+    return false;
+  } else {
+    for (int i = 0; i < str1.length(); ++i) {
+      ++compChar[str1[i]];
+      --compChar[str2[i]];
+    }
+    
+    for (int i = 0; i < nrOfASCIIchar; ++i) {
+      if (compChar[i]) return false;
+    } 
+  }
+
+  return true;
+}
+
